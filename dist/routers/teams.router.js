@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const teams_controller_1 = require("../controllers/teams.controller");
+const createTeam_validation_1 = require("../schemas/createTeam.validation");
+const validate_middleware_1 = require("../middleware/validate.middleware");
+const updateTeam_validation_1 = require("../schemas/updateTeam.validation");
+const teamsRouter = (0, express_1.Router)();
+teamsRouter.get('/', teams_controller_1.getTeamHandler);
+teamsRouter.post('/', (0, validate_middleware_1.validate)(createTeam_validation_1.createTeamSchema), teams_controller_1.createTeamHandler);
+teamsRouter.put('/:teamId', (0, validate_middleware_1.validate)(updateTeam_validation_1.updateTeamSchema), teams_controller_1.updateTeamHandler);
+teamsRouter.delete('/:teamId', teams_controller_1.deleteTeamHandler);
+exports.default = teamsRouter;

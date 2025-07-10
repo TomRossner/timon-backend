@@ -1,0 +1,68 @@
+[
+  {
+    "firstName": "Tom",
+    "lastName": "Rossner",
+    "userName": "tomro98",
+    "email": "tomrossner2@gmail.com",
+    "password": "Tomrossner123",
+    "image": "",
+    "gender": "male",
+    "online": false,
+    "phoneNumber": "0584844789"
+  },
+  {
+    "firstName": "Idan",
+    "lastName": "Scheuer",
+    "userName": "idansch",
+    "email": "idanscheuer@gmail.com",
+    "password": "Idanscheuer123",
+    "image": "",
+    "gender": "male",
+    "online": false,
+    "phoneNumber": "0584844789"
+  },
+  {
+    "firstName": "Dror",
+    "lastName": "Yahalom",
+    "userName": "drorya",
+    "email": "droryahalom@gmail.com",
+    "password": "Droryahalom123",
+    "image": "",
+    "gender": "male",
+    "online": false,
+    "phoneNumber": "0584844789"
+  },
+  {
+    "firstName": "Ayelet",
+    "lastName": "Ben Zion",
+    "userName": "ayeletbenzion",
+    "email": "ayeletbenzion@gmail.com",
+    "password": "Ayeletbenzion123",
+    "image": "",
+    "gender": "female",
+    "online": false,
+    "phoneNumber": "0584844789"
+  },
+  {
+    "firstName": "Yaron",
+    "lastName": "Katzir",
+    "userName": "yaronkat",
+    "email": "yaronkatzir@gmail.com",
+    "password": "Yaronkatzir123",
+    "image": "",
+    "gender": "male",
+    "online": false,
+    "phoneNumber": "0584844789"
+  },
+  {
+    "firstName": "Udi",
+    "lastName": "Magid",
+    "userName": "udimagudi",
+    "email": "udimagid@gmail.com",
+    "password": "Udimagid123",
+    "image": "",
+    "gender": "male",
+    "online": false,
+    "phoneNumber": "0584844789"
+  }
+]
