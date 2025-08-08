@@ -1,15 +1,11 @@
 import { FilterQuery, UpdateQuery } from "mongoose";
 import DivisionModel, { DivisionDoc } from "../models/division.model";
-import { Division } from "../lib/divisions";
+import { DivisionData } from "../lib/divisions";
 
 export const findDivision = async (query: FilterQuery<DivisionDoc>) => {
     const divisions = await DivisionModel.find(query).select({ __v: 0 });
 
     return divisions;
-}
-
-type DivisionData = {
-    name: Division;
 }
 
 export const createNewDivision = async (divisionData: DivisionData) => {

@@ -1,5 +1,5 @@
 import mongoose, { InferSchemaType } from "mongoose";
-import { Divisions, DIVISIONS } from "../lib/divisions";
+import { Divisions, DEFAULT_DIVISIONS } from "../lib/divisions";
 
 const AddressSchema = new mongoose.Schema({
     city: { type: String, required: true },
@@ -17,14 +17,14 @@ const TeamSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
-    teamName: {
+    name: {
         type: String,
         required: true,
         unique: true,
     },
     division: {
         type: String,
-        enum: DIVISIONS,
+        enum: DEFAULT_DIVISIONS,
         required: true,
         default: Divisions.PRO,
     },

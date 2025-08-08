@@ -6,7 +6,7 @@ export const updatePlayerSchema = z.object({
         user: z.string(), // ObjectId reference
         team: z.object({
             teamId: z.string(),
-            teamName: z
+            name: z
                 .string()
                 .regex(NAME_REGEXP),
             manager: z.string().nullable(), // ObjectId reference

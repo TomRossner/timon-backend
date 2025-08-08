@@ -4,7 +4,7 @@ export type TeamID = string;
 
 export type TeamData = {
     teamId: TeamID;
-    teamName: string;
+    name: string;
     manager: UserSummary;
     coaches: Map<UID, UserSummary>;
     roster: Map<UID, UserSummary>;

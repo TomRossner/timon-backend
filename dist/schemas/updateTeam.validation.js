@@ -5,7 +5,7 @@ const zod_1 = require("zod");
 const regexp_1 = require("../lib/regexp");
 exports.updateTeamSchema = zod_1.z.object({
     body: zod_1.z.object({
-        teamName: zod_1.z
+        name: zod_1.z
             .string()
             .regex(regexp_1.NAME_REGEXP),
         manager: zod_1.z.string(), // ObjectId reference

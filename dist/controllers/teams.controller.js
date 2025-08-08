@@ -25,16 +25,16 @@ const getTeamHandler = (req, res) => __awaiter(void 0, void 0, void 0, function*
             const teams = yield (0, teams_service_1.findTeam)({});
             res
                 .status(httpStatusCodes_1.default.SUCCESS)
-                .json((0, arrayToObject_1.arrayToObject)(teams, team => team.teamName));
+                .json((0, arrayToObject_1.arrayToObject)(teams, team => team.name));
             return;
         }
         if (name) {
             const REGEX_SPECIAL_CHARS = /[.*+?^${}()|[\]\\]/g;
             const escapeRegex = (str) => str.replace(REGEX_SPECIAL_CHARS, '\\$&');
             const team = yield (0, teams_service_1.findTeam)({
-                teamName: { $regex: `^${escapeRegex(name.toString())}$`, $options: 'i' },
+                name: { $regex: `^${escapeRegex(name.toString())}$`, $options: 'i' },
             });
-            if (!team) {
+            if (!team.length) {
                 res
                     .status(httpStatusCodes_1.default.NOT_FOUND)
                     .json({
@@ -44,11 +44,11 @@ const getTeamHandler = (req, res) => __awaiter(void 0, void 0, void 0, function*
             }
             res
                 .status(httpStatusCodes_1.default.SUCCESS)
-                .json((0, arrayToObject_1.arrayToObject)(team, team => team.teamName));
+                .json((0, arrayToObject_1.arrayToObject)(team, team => team.name));
             return;
         }
         const team = yield (0, teams_service_1.findTeam)({ teamId: id });
-        if (!team) {
+        if (!team.length) {
             res
                 .status(httpStatusCodes_1.default.NOT_FOUND)
                 .json({
@@ -58,7 +58,7 @@ const getTeamHandler = (req, res) => __awaiter(void 0, void 0, void 0, function*
         }
         res
             .status(httpStatusCodes_1.default.SUCCESS)
-            .json((0, arrayToObject_1.arrayToObject)(team, team => team.teamName));
+            .json((0, arrayToObject_1.arrayToObject)(team, team => team.name));
     }
     catch (error) {
         res
@@ -73,24 +73,24 @@ const getTeamHandler = (req, res) => __awaiter(void 0, void 0, void 0, function*
 exports.getTeamHandler = getTeamHandler;
 const createTeamHandler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { teamName } = req.body;
-        const exists = yield (0, teams_service_1.findTeam)({ teamName });
+        const { name } = req.body;
+        const exists = yield (0, teams_service_1.findTeam)({ name });
         if (exists.length) {
             res
                 .status(httpStatusCodes_1.default.BAD_REQUEST)
                 .json({
-                message: `Team ${teamName} already exists.`,
+                message: `Team ${name} already exists.`,
             });
             return;
         }
         const newTeam = yield (0, teams_service_1.createNewTeam)(Object.assign(Object.assign({}, req.body), { teamId: (0, uuid_1.v4)() }));
         if (!newTeam) {
-            throw new Error(`Failed creating team ${teamName}.`);
+            throw new Error(`Failed creating team ${name}.`);
         }
         res
             .status(httpStatusCodes_1.default.CREATED)
             .json({
-            message: `Team ${teamName} created successfully.`,
+            message: `Team ${name} created successfully.`,
         });
     }
     catch (error) {
@@ -99,7 +99,7 @@ const createTeamHandler = (req, res) => __awaiter(void 0, void 0, void 0, functi
             .json({
             message: error instanceof Error
                 ? error.message
-                : `Failed creating team ${req.body.teamName}.`,
+                : `Failed creating team ${req.body.name}.`,
         });
     }
 });
@@ -128,7 +128,7 @@ const updateTeamHandler = (req, res) => __awaiter(void 0, void 0, void 0, functi
         res
             .status(httpStatusCodes_1.default.SUCCESS)
             .json({
-            message: `Team ${updated.teamName} updated successfully.`,
+            message: `Team ${updated.name} updated successfully.`,
         });
     }
     catch (error) {

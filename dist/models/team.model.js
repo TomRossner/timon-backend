@@ -20,14 +20,14 @@ const TeamSchema = new mongoose_1.default.Schema({
         required: true,
         unique: true,
     },
-    teamName: {
+    name: {
         type: String,
         required: true,
         unique: true,
     },
     division: {
         type: String,
-        enum: divisions_1.DIVISIONS,
+        enum: divisions_1.DEFAULT_DIVISIONS,
         required: true,
         default: divisions_1.Divisions.PRO,
     },

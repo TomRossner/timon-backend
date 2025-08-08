@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { createNewDivision, deleteDivision, findDivision, updateDivision } from "../services/divisions.service";
 import HTTP_STATUS_CODES from "../lib/httpStatusCodes";
 import { arrayToObject } from "../lib/arrayToObject";
+import { allDivisions, Division, DivisionData } from "../lib/divisions";
+import { DivisionDoc } from "../models/division.model";
 
 export const getDivisionHandler = async (req: Request, res: Response) => {
     try {
@@ -9,10 +11,21 @@ export const getDivisionHandler = async (req: Request, res: Response) => {
 
         if (!name) {
             // Return all divisions
-            const divisions = await findDivision({});
+            let divisions = await findDivision({});
 
             if (!divisions.length) {
-                
+                const createDefaultDivisions = () => Promise.all(allDivisions.map(async (name: Division) => {
+                    const divisionData: DivisionData = { name };
+                    return await createNewDivision(divisionData);
+                }));
+
+                const defaultDivisions: DivisionDoc[] = await createDefaultDivisions();
+
+                if (!defaultDivisions.length) {
+                    throw new Error(`An error occurred while creating default divisions.`);
+                }
+
+                divisions = await findDivision({});
             }
 
             res
@@ -23,7 +36,7 @@ export const getDivisionHandler = async (req: Request, res: Response) => {
 
         const division = await findDivision({ name });
 
-        if (!division) {
+        if (!division.length) {
             res
                 .status(HTTP_STATUS_CODES.NOT_FOUND)
                 .json({
@@ -33,10 +46,8 @@ export const getDivisionHandler = async (req: Request, res: Response) => {
         }
 
         res
-            .status(HTTP_STATUS_CODES.CREATED)
-            .json({
-                message: `Division ${name} created successfully.`,
-            });
+            .status(HTTP_STATUS_CODES.SUCCESS)
+            .json(arrayToObject(division as DivisionDoc[], division => division.name!));
     } catch (error) {
         res
             .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)

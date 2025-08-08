@@ -8,7 +8,7 @@ exports.updatePlayerSchema = zod_1.z.object({
         user: zod_1.z.string(), // ObjectId reference
         team: zod_1.z.object({
             teamId: zod_1.z.string(),
-            teamName: zod_1.z
+            name: zod_1.z
                 .string()
                 .regex(regexp_1.NAME_REGEXP),
             manager: zod_1.z.string().nullable(), // ObjectId reference

@@ -7,7 +7,7 @@ const regexp_1 = require("../lib/regexp");
 exports.PlayerSchema = zod_1.z.object({
     user: user_schema_1.UserSummarySchema,
     teamId: zod_1.z.string(),
-    teamName: zod_1.z
+    name: zod_1.z
         .string()
         .regex(regexp_1.NAME_REGEXP),
     jerseyNumber: zod_1.z.number(),

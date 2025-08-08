@@ -52,7 +52,7 @@ const PlayerSchema = new mongoose_1.default.Schema({
         type: String,
         required: true,
     },
-    teamName: {
+    name: {
         type: String,
         required: true,
     },

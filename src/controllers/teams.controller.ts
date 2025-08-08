@@ -14,7 +14,7 @@ export const getTeamHandler = async (req: Request, res: Response) => {
 
             res
                 .status(HTTP_STATUS_CODES.SUCCESS)
-                .json(arrayToObject(teams, team => team!.teamName));
+                .json(arrayToObject(teams, team => team!.name));
             return;
         }
 
@@ -23,10 +23,10 @@ export const getTeamHandler = async (req: Request, res: Response) => {
             const escapeRegex = (str: string) => str.replace(REGEX_SPECIAL_CHARS, '\\$&');
             
             const team = await findTeam({
-                teamName: { $regex: `^${escapeRegex(name.toString())}$`, $options: 'i' },
+                name: { $regex: `^${escapeRegex(name.toString())}$`, $options: 'i' },
             });
 
-            if (!team) {
+            if (!team.length) {
                 res
                     .status(HTTP_STATUS_CODES.NOT_FOUND)
                     .json({
@@ -37,13 +37,13 @@ export const getTeamHandler = async (req: Request, res: Response) => {
             
             res
                 .status(HTTP_STATUS_CODES.SUCCESS)
-                .json(arrayToObject(team, team => team!.teamName));
+                .json(arrayToObject(team, team => team!.name));
             return;
         }
 
         const team = await findTeam({ teamId: id });
 
-        if (!team) {
+        if (!team.length) {
             res
                 .status(HTTP_STATUS_CODES.NOT_FOUND)
                 .json({
@@ -54,7 +54,7 @@ export const getTeamHandler = async (req: Request, res: Response) => {
 
         res
             .status(HTTP_STATUS_CODES.SUCCESS)
-            .json(arrayToObject(team, team => team!.teamName));
+            .json(arrayToObject(team, team => team!.name));
     } catch (error) {
         res
             .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
@@ -68,15 +68,15 @@ export const getTeamHandler = async (req: Request, res: Response) => {
 
 export const createTeamHandler = async (req: Request, res: Response) => {
     try {
-        const { teamName } = req.body;
+        const { name } = req.body;
 
-        const exists = await findTeam({ teamName });
+        const exists = await findTeam({ name });
 
         if (exists.length) {
             res
                 .status(HTTP_STATUS_CODES.BAD_REQUEST)
                 .json({
-                    message: `Team ${teamName} already exists.`,
+                    message: `Team ${name} already exists.`,
                 });
             return;
         }
@@ -87,13 +87,13 @@ export const createTeamHandler = async (req: Request, res: Response) => {
         });
 
         if (!newTeam) {
-            throw new Error(`Failed creating team ${teamName}.`);
+            throw new Error(`Failed creating team ${name}.`);
         }
 
         res
             .status(HTTP_STATUS_CODES.CREATED)
             .json({
-                message: `Team ${teamName} created successfully.`,
+                message: `Team ${name} created successfully.`,
             });
     } catch (error) {
         res
@@ -101,7 +101,7 @@ export const createTeamHandler = async (req: Request, res: Response) => {
             .json({
                 message: error instanceof Error
                     ? error.message
-                    : `Failed creating team ${req.body.teamName}.`,
+                    : `Failed creating team ${req.body.name}.`,
             });
     }
 }
@@ -135,7 +135,7 @@ export const updateTeamHandler = async (req: Request, res: Response) => {
         res
             .status(HTTP_STATUS_CODES.SUCCESS)
             .json({
-                message: `Team ${updated.teamName} updated successfully.`,
+                message: `Team ${updated.name} updated successfully.`,
             });
     } catch (error) {
         res

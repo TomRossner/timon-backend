@@ -16,19 +16,32 @@ exports.deleteDivisionHandler = exports.updateDivisionHandler = exports.createDi
 const divisions_service_1 = require("../services/divisions.service");
 const httpStatusCodes_1 = __importDefault(require("../lib/httpStatusCodes"));
 const arrayToObject_1 = require("../lib/arrayToObject");
+const divisions_1 = require("../lib/divisions");
 const getDivisionHandler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name } = req.query;
         if (!name) {
             // Return all divisions
-            const divisions = yield (0, divisions_service_1.findDivision)({});
+            let divisions = yield (0, divisions_service_1.findDivision)({});
+            if (!divisions.length) {
+                const createDefaultDivisions = () => Promise.all(divisions_1.allDivisions.map((name) => __awaiter(void 0, void 0, void 0, function* () {
+                    const divisionData = { name };
+                    return yield (0, divisions_service_1.createNewDivision)(divisionData);
+                })));
+                const defaultDivisions = yield createDefaultDivisions();
+                if (!defaultDivisions.length) {
+                    throw new Error(`An error occurred while creating default divisions.`);
+                }
+                console.log(defaultDivisions);
+                // divisions = defaultDivisions.map(division => division.name);
+            }
             res
                 .status(httpStatusCodes_1.default.SUCCESS)
                 .json((0, arrayToObject_1.arrayToObject)(divisions, division => division.name));
             return;
         }
         const division = yield (0, divisions_service_1.findDivision)({ name });
-        if (!division) {
+        if (!division.length) {
             res
                 .status(httpStatusCodes_1.default.NOT_FOUND)
                 .json({
@@ -37,10 +50,8 @@ const getDivisionHandler = (req, res) => __awaiter(void 0, void 0, void 0, funct
             return;
         }
         res
-            .status(httpStatusCodes_1.default.CREATED)
-            .json({
-            message: `Division ${name} created successfully.`,
-        });
+            .status(httpStatusCodes_1.default.SUCCESS)
+            .json((0, arrayToObject_1.arrayToObject)(division, division => division.name));
     }
     catch (error) {
         res

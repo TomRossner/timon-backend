@@ -23,7 +23,7 @@ const UserSummarySchema = new mongoose_1.default.Schema({
 const PlayerSchema = new mongoose_1.default.Schema({
     user: { type: UserSummarySchema, required: true },
     teamId: { type: String, required: true },
-    teamName: { type: String, required: true },
+    name: { type: String, required: true },
     jerseyNumber: { type: Number, required: true },
     isCaptain: { type: Boolean, default: false },
     role: {
@@ -47,7 +47,7 @@ const TeamSchema = new mongoose_1.default.Schema({
         required: true,
         unique: true,
     },
-    teamName: {
+    name: {
         type: String,
         required: true,
         unique: true,

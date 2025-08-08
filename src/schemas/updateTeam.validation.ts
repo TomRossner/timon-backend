@@ -3,7 +3,7 @@ import { NAME_REGEXP } from "../lib/regexp";
 
 export const updateTeamSchema = z.object({
     body: z.object({
-        teamName: z
+        name: z
             .string()
             .regex(NAME_REGEXP),
         manager: z.string(), // ObjectId reference
