@@ -1,4 +1,4 @@
-export const DIVISIONS = [
+export const DEFAULT_DIVISIONS = [
     "pro",
     "amateur",
     "women",

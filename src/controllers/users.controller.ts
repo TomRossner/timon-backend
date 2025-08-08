@@ -8,6 +8,7 @@ import { UserDoc } from "../models/user.model";
 import { FullUser, NewUserData } from "../types/user";
 import fsPromises from "fs/promises";
 import path from "path";
+import { isValidObjectId } from "mongoose";
 
 export const createMockUsers = async (req: Request, res: Response) => {
     try {
@@ -55,15 +56,32 @@ export const getUserHandler = async (req: Request, res: Response) => {
             return;
         }
 
-        const user = await findUser({ uid }, { stripPassword: true });
+        // Try with uid
+        let user = await findUser({ uid }, { stripPassword: true });
 
-        if (!user) {
-            res
-                .status(HTTP_STATUS_CODES.NOT_FOUND)
-                .json({
-                    message: `User ${uid} not found.`,
-                });
-            return;
+        if (!user.length) {
+            if (isValidObjectId(uid)) {
+                // Try with ObjectId (_id)
+                const userByObjectId = await findUser({ _id: uid }, { stripPassword: true });
+                
+                if (!userByObjectId.length) {
+                    res
+                        .status(HTTP_STATUS_CODES.NOT_FOUND)
+                        .json({
+                            message: `User ${uid} not found.`,
+                        });
+                    return;
+                }
+
+                user = userByObjectId;
+            } else {
+                res
+                    .status(HTTP_STATUS_CODES.NOT_FOUND)
+                    .json({
+                        message: `User ${uid} not found.`,
+                    });
+                return;
+            }
         }
 
         res

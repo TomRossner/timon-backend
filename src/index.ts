@@ -13,6 +13,7 @@ import usersRouter from "./routers/users.router";
 import { connectDb } from "./database/database";
 import teamsRouter from "./routers/teams.router";
 import playersRouter from "./routers/players.router";
+import divisionsRouter from "./routers/divisions.router";
 
 const PORT = 3001;
 
@@ -33,6 +34,7 @@ const notFoundHandler = (req: Request, res: Response) => {
 app.use('/api/users', usersRouter);
 app.use('/api/teams', teamsRouter);
 app.use('/api/players', playersRouter);
+app.use('/api/divisions', divisionsRouter);
 
 app.use(notFoundHandler);
 

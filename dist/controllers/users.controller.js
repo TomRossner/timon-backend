@@ -31,6 +31,7 @@ const users_service_1 = require("../services/users.service");
 const arrayToObject_1 = require("../lib/arrayToObject");
 const promises_1 = __importDefault(require("fs/promises"));
 const path_1 = __importDefault(require("path"));
+const mongoose_1 = require("mongoose");
 const createMockUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const filePath = path_1.default.join(__dirname, '../database/users.json');
@@ -70,14 +71,30 @@ const getUserHandler = (req, res) => __awaiter(void 0, void 0, void 0, function*
                 .json(Array.isArray(users) ? (0, arrayToObject_1.arrayToObject)(users, user => user.uid) : users);
             return;
         }
-        const user = yield (0, users_service_1.findUser)({ uid }, { stripPassword: true });
-        if (!user) {
-            res
-                .status(httpStatusCodes_1.default.NOT_FOUND)
-                .json({
-                message: `User ${uid} not found.`,
-            });
-            return;
+        // Try with uid
+        let user = yield (0, users_service_1.findUser)({ uid }, { stripPassword: true });
+        if (!user.length) {
+            if ((0, mongoose_1.isValidObjectId)(uid)) {
+                // Try with ObjectId (_id)
+                const userByObjectId = yield (0, users_service_1.findUser)({ _id: uid }, { stripPassword: true });
+                if (!userByObjectId.length) {
+                    res
+                        .status(httpStatusCodes_1.default.NOT_FOUND)
+                        .json({
+                        message: `User ${uid} not found.`,
+                    });
+                    return;
+                }
+                user = userByObjectId;
+            }
+            else {
+                res
+                    .status(httpStatusCodes_1.default.NOT_FOUND)
+                    .json({
+                    message: `User ${uid} not found.`,
+                });
+                return;
+            }
         }
         res
             .status(httpStatusCodes_1.default.SUCCESS)

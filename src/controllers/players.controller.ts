@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
 import { createNewPlayer, deletePlayer, findPlayer, updatePlayer } from "../services/players.service";
 import HTTP_STATUS_CODES from "../lib/httpStatusCodes";
-import { v4 as uuid } from "uuid";
 import { arrayToObject } from "../lib/arrayToObject";
 import { PopulatedPlayer } from "../types/populated";
-import { findUser } from "../services/users.service";
+import { isValidObjectId } from "mongoose";
 
 export const getPlayerHandler = async (req: Request, res: Response) => {
     try {
@@ -20,9 +19,14 @@ export const getPlayerHandler = async (req: Request, res: Response) => {
             return;
         }
 
+        if (!isValidObjectId(id)) {
+            throw new Error(`An error occurred while fetching player. Invalid id reference.`);
+        }
+
+        // user = ObjectId reference
         const player = await findPlayer({ user: id });
 
-        if (!player) {
+        if (!player.length) {
             res
                 .status(HTTP_STATUS_CODES.NOT_FOUND)
                 .json({

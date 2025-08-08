@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const validate_middleware_1 = require("../middleware/validate.middleware");
+const createDivision_validation_1 = require("../schemas/createDivision.validation");
+const divisions_controller_1 = require("../controllers/divisions.controller");
+const updateDivision_validate_1 = require("../schemas/updateDivision.validate");
+const divisionsRouter = (0, express_1.Router)();
+divisionsRouter.get('/', divisions_controller_1.getDivisionHandler);
+divisionsRouter.post('/', (0, validate_middleware_1.validate)(createDivision_validation_1.createDivisionSchema), divisions_controller_1.createDivisionHandler);
+divisionsRouter.put('/:division', (0, validate_middleware_1.validate)(updateDivision_validate_1.updateDivisionSchema), divisions_controller_1.updateDivisionHandler);
+divisionsRouter.delete('/:division', divisions_controller_1.deleteDivisionHandler);
+exports.default = divisionsRouter;

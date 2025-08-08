@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { NAME_REGEXP } from "../lib/regexp";
-import { ERROR_MESSAGES } from "../lib/errorMessages";
 
 export const updatePlayerSchema = z.object({
     body: z.object({
