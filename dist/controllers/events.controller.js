@@ -16,7 +16,6 @@ exports.deleteEventHandler = exports.updateEventHandler = exports.createEventHan
 const events_service_1 = require("../services/events.service");
 const httpStatusCodes_1 = __importDefault(require("../lib/httpStatusCodes"));
 const arrayToObject_1 = require("../lib/arrayToObject");
-const uuid_1 = require("uuid");
 const getEventHandler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { eventId } = req.query;
@@ -65,7 +64,7 @@ const createEventHandler = (req, res) => __awaiter(void 0, void 0, void 0, funct
             });
             return;
         }
-        const newEvent = yield (0, events_service_1.createNewEvent)(Object.assign(Object.assign({}, req.body), { eventId: (0, uuid_1.v4)() }));
+        const newEvent = yield (0, events_service_1.createNewEvent)(req.body);
         if (!newEvent) {
             throw new Error(`Failed creating event ${title}.`);
         }

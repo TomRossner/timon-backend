@@ -1,20 +1,10 @@
-import { Request, Response, Router } from "express";
-import { credentialsSchema } from "../schemas/authCredentials.validation";
-import User from "../models/user.model";
+import { Router } from "express";
+import { authCredentialsSchema } from "../schemas/authCredentials.validation";
 import { validate } from "../middleware/validate.middleware";
+import { userLoginHandler } from "../controllers/auth.controller";
 
 const authRouter = Router();
 
-authRouter.post('/', validate(credentialsSchema), async (req: Request, res: Response) => {
-    try {
-        const { email, password } = req.body;
-
-        const user = await User.findOne({email});
-
-        // if (user.pas)
-    } catch (error) {
-        
-    }
-});
+authRouter.post('/', validate(authCredentialsSchema), userLoginHandler);
 
 export default authRouter;

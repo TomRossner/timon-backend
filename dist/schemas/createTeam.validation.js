@@ -7,7 +7,7 @@ const divisions_1 = require("../lib/divisions");
 const divisions = [...divisions_1.allDivisions];
 exports.createTeamSchema = zod_1.z.object({
     body: zod_1.z.object({
-        teamName: zod_1.z
+        name: zod_1.z
             .string()
             .regex(regexp_1.NAME_REGEXP),
         manager: zod_1.z.string(), // ObjectId reference

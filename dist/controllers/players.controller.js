@@ -29,7 +29,7 @@ const getPlayerHandler = (req, res) => __awaiter(void 0, void 0, void 0, functio
             return;
         }
         if (!(0, mongoose_1.isValidObjectId)(id)) {
-            throw new Error(`An error occurred while fetching player. Invalid id reference.`);
+            throw new Error(`Player ${id} not found.`);
         }
         // user = ObjectId reference
         const player = yield (0, players_service_1.findPlayer)({ user: id });

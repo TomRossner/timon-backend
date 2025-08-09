@@ -3,7 +3,7 @@ import { PASSWORD_REGEXP } from "../lib/regexp";
 import { PASSWORD_MAX_LENGTH } from "../lib/constants";
 import { ERROR_MESSAGES } from "../lib/errorMessages";
 
-export const credentialsSchema = z.object({
+export const authCredentialsSchema = z.object({
     body: z.object({
         email: z
             .string()
@@ -15,4 +15,4 @@ export const credentialsSchema = z.object({
     }),
 });
 
-export type CredentialsInput = z.infer<typeof credentialsSchema>['body'];
+export type AuthCredentialsInput = z.infer<typeof authCredentialsSchema>['body'];

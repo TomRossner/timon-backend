@@ -17,23 +17,28 @@ const event_model_1 = __importDefault(require("../models/event.model"));
 const uuid_1 = require("uuid");
 const USER_SELECT_FIELDS = { __v: 0, password: 0 };
 const findEvent = (query) => __awaiter(void 0, void 0, void 0, function* () {
-    const events = yield event_model_1.default
-        .find(query)
-        .select({ __v: 0 })
-        .populate({
-        path: 'teams',
-        populate: [
-            { path: 'manager', select: USER_SELECT_FIELDS },
-            { path: 'roster', populate: { path: 'user', select: USER_SELECT_FIELDS }, select: { __v: 0 } },
-            { path: 'coaches', populate: { path: 'user', select: USER_SELECT_FIELDS }, select: { __v: 0 } }
-        ],
-        select: { __v: 0 },
-    }).populate({
-        path: 'createdBy',
-        select: USER_SELECT_FIELDS,
-    })
-        .lean();
-    return events;
+    const events = yield event_model_1.default.find(query);
+    if (!events.length)
+        return [];
+    const populatedEvents = yield Promise.all(events.map((event) => __awaiter(void 0, void 0, void 0, function* () {
+        return yield event_model_1.default
+            .findById(event._id)
+            .select({ __v: 0 })
+            .populate({
+            path: 'teams',
+            populate: [
+                { path: 'manager', select: USER_SELECT_FIELDS },
+                { path: 'roster', populate: { path: 'user', select: USER_SELECT_FIELDS }, select: { __v: 0 } },
+                { path: 'coaches', populate: { path: 'user', select: USER_SELECT_FIELDS }, select: { __v: 0 } }
+            ],
+            select: { __v: 0 },
+        }).populate({
+            path: 'createdBy',
+            select: USER_SELECT_FIELDS,
+        })
+            .lean();
+    })));
+    return populatedEvents;
 });
 exports.findEvent = findEvent;
 const createNewEvent = (eventData) => __awaiter(void 0, void 0, void 0, function* () {

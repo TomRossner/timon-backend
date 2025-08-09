@@ -72,9 +72,14 @@ const getTeamHandler = (req, res) => __awaiter(void 0, void 0, void 0, function*
 });
 exports.getTeamHandler = getTeamHandler;
 const createTeamHandler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     try {
-        const { name } = req.body;
-        const exists = yield (0, teams_service_1.findTeam)({ name });
+        const name = (_a = req.body.name) === null || _a === void 0 ? void 0 : _a.trim();
+        const REGEX_SPECIAL_CHARS = /[.*+?^${}()|[\]\\]/g;
+        const escapeRegex = (str) => str.replace(REGEX_SPECIAL_CHARS, '\\$&');
+        const exists = yield (0, teams_service_1.findTeam)({
+            name: { $regex: `^${escapeRegex(name.toString())}$`, $options: 'i' }
+        });
         if (exists.length) {
             res
                 .status(httpStatusCodes_1.default.BAD_REQUEST)

@@ -8,7 +8,6 @@ export const validate = (schema: AnyZodObject) => (req: Request, res: Response, 
     });
 
     if (!result.success) {
-        console.log(result.error)
         res
             .status(HTTP_STATUS_CODES.BAD_REQUEST)
             .json({

@@ -20,11 +20,8 @@ require("../models/team.model");
 require("../models/user.model");
 const USER_SELECT_FIELDS = { __v: 0, password: 0 };
 const findTeam = (query) => __awaiter(void 0, void 0, void 0, function* () {
-    const teams = yield team_model_1.default.find(query).select({ __v: 0 });
-    if (!teams.length)
-        return [];
-    const populatedTeams = yield Promise.all(teams.map(team => team_model_1.default
-        .findById(team._id)
+    const teams = yield team_model_1.default
+        .find(query)
         .select({ __v: 0 })
         .populate({
         path: 'manager',
@@ -40,8 +37,8 @@ const findTeam = (query) => __awaiter(void 0, void 0, void 0, function* () {
         populate: { path: 'user', select: USER_SELECT_FIELDS },
         select: { __v: 0 }
     })
-        .lean()));
-    return populatedTeams;
+        .lean();
+    return teams;
 });
 exports.findTeam = findTeam;
 const createNewTeam = (teamData) => __awaiter(void 0, void 0, void 0, function* () {
