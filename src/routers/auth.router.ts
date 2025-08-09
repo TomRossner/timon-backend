@@ -5,6 +5,6 @@ import { userLoginHandler } from "../controllers/auth.controller";
 
 const authRouter = Router();
 
-authRouter.post('/', validate(authCredentialsSchema), userLoginHandler);
+authRouter.post('/login', validate(authCredentialsSchema), userLoginHandler);
 
 export default authRouter;

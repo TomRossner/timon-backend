@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.credentialsSchema = void 0;
+exports.authCredentialsSchema = void 0;
 const zod_1 = require("zod");
 const regexp_1 = require("../lib/regexp");
 const constants_1 = require("../lib/constants");
 const errorMessages_1 = require("../lib/errorMessages");
-exports.credentialsSchema = zod_1.z.object({
+exports.authCredentialsSchema = zod_1.z.object({
     body: zod_1.z.object({
         email: zod_1.z
             .string()

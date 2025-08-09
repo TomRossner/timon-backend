@@ -12,6 +12,7 @@ export type UserSummary = {
     image: string;
     online: boolean;
     gender: Gender;
+    teudatZehut: number;
 }
 
 export type Gender = "male" | "female" | "non-binary" | "prefer_not_to_say";

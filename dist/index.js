@@ -26,6 +26,7 @@ const teams_router_1 = __importDefault(require("./routers/teams.router"));
 const players_router_1 = __importDefault(require("./routers/players.router"));
 const divisions_router_1 = __importDefault(require("./routers/divisions.router"));
 const events_router_1 = __importDefault(require("./routers/events.router"));
+const auth_router_1 = __importDefault(require("./routers/auth.router"));
 const PORT = 3001;
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
@@ -38,6 +39,7 @@ const notFoundHandler = (req, res) => {
         path: req.originalUrl,
     });
 };
+app.use('/api/auth', auth_router_1.default);
 app.use('/api/users', users_router_1.default);
 app.use('/api/teams', teams_router_1.default);
 app.use('/api/players', players_router_1.default);

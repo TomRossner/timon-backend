@@ -35,8 +35,11 @@ export const createNewUser = async (userData: NewUserData) => {
         .toObject();
 }
 
-export const updateUser = async (query: FilterQuery<UserDoc>, update: UpdateQuery<UserDoc>) => {
-    return await UserModel.findOneAndUpdate(query, update, { new: true }).lean();
+export const updateUser = async (query: FilterQuery<UserDoc>, update: UpdateQuery<UserDoc>, options?: { stripPassword: boolean }) => {
+    return await UserModel
+        .findOneAndUpdate(query, update, { new: true })
+        .select({ __v: 0, password: options?.stripPassword ? 0 : 1 })
+        .lean();
 }
 
 export const deleteUser = async (uid: string) => {

@@ -36,8 +36,11 @@ const createNewUser = (userData) => __awaiter(void 0, void 0, void 0, function* 
         .toObject();
 });
 exports.createNewUser = createNewUser;
-const updateUser = (query, update) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield user_model_1.default.findOneAndUpdate(query, update, { new: true }).lean();
+const updateUser = (query, update, options) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield user_model_1.default
+        .findOneAndUpdate(query, update, { new: true })
+        .select({ __v: 0, password: (options === null || options === void 0 ? void 0 : options.stripPassword) ? 0 : 1 })
+        .lean();
 });
 exports.updateUser = updateUser;
 const deleteUser = (uid) => __awaiter(void 0, void 0, void 0, function* () {

@@ -10,7 +10,6 @@ const validate = (schema) => (req, res, next) => {
         body: req.body,
     });
     if (!result.success) {
-        console.log(result.error);
         res
             .status(httpStatusCodes_1.default.BAD_REQUEST)
             .json({

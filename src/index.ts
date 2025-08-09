@@ -15,6 +15,7 @@ import teamsRouter from "./routers/teams.router";
 import playersRouter from "./routers/players.router";
 import divisionsRouter from "./routers/divisions.router";
 import eventsRouter from "./routers/events.router";
+import authRouter from "./routers/auth.router";
 
 const PORT = 3001;
 
@@ -32,6 +33,7 @@ const notFoundHandler = (req: Request, res: Response) => {
     });
 }
 
+app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/teams', teamsRouter);
 app.use('/api/players', playersRouter);

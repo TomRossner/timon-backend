@@ -3,6 +3,8 @@ import { findUser, updateUser } from "../services/users.service";
 import HTTP_STATUS_CODES from "../lib/httpStatusCodes";
 import { ERROR_MESSAGES } from "../lib/errorMessages";
 import { compare } from "bcrypt";
+import { generateToken } from "../lib/jwt";
+import { FullUser } from "../types/user";
 
 export const userLoginHandler = async (req: Request, res: Response) => {
     try {
@@ -30,15 +32,21 @@ export const userLoginHandler = async (req: Request, res: Response) => {
             return;
         }
 
-        const updatedUser = await updateUser({ email }, { online: true });
+        const updatedUser = await updateUser(
+            { email },
+            { online: true },
+            { stripPassword: true }
+        );
 
         if (!updatedUser) {
             throw new Error(ERROR_MESSAGES.INTERNAL_SERVER_ERROR);
         }
 
+        const token = generateToken(updatedUser as unknown as FullUser);
+        
         res
             .status(HTTP_STATUS_CODES.SUCCESS)
-            .json(updatedUser);
+            .json({ token });
     } catch (error) {
         res
             .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
