@@ -32,8 +32,7 @@ const getDivisionHandler = (req, res) => __awaiter(void 0, void 0, void 0, funct
                 if (!defaultDivisions.length) {
                     throw new Error(`An error occurred while creating default divisions.`);
                 }
-                console.log(defaultDivisions);
-                // divisions = defaultDivisions.map(division => division.name);
+                divisions = yield (0, divisions_service_1.findDivision)({});
             }
             res
                 .status(httpStatusCodes_1.default.SUCCESS)

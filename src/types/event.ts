@@ -1,23 +1,30 @@
-import { Teams } from "./team";
-import { Users } from "./user";
-
 export type EventID = string;
+
+export type EventType = "league" | "tournament";
 
 export type EventData = {
     eventId: EventID;
-    eventName: string;
-    dates: Dates;
-    organizers: Users;
-    participants: Users;
-    teams: Teams;
-    description: string;
+    title: string;
+    teams: string[];
+    type: EventType;
+    banner?: string;
+    logo?: string;
+    startDate: Date;
+    endDate: Date;
+    createdBy: string;
+    address?: {
+        city: string;
+        fieldAddress: string;
+        fieldName?: string;
+        location: {
+            long: number;
+            lat: number;
+        }
+    }
 }
 
-export type Dates = {
-    start: Date;
-    end: Date;
+export type Event = EventData & {
+    eventId: EventID;
 }
-
-export type Event = EventData;
 
 export type Events = Map<EventID, EventData>;

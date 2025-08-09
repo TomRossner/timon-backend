@@ -1,82 +1,73 @@
 import { Request, Response } from "express";
-import { createNewPlayer, deletePlayer, findPlayer, updatePlayer } from "../services/players.service";
+import { createNewEvent, deleteEvent, findEvent, updateEvent } from "../services/events.service";
 import HTTP_STATUS_CODES from "../lib/httpStatusCodes";
 import { arrayToObject } from "../lib/arrayToObject";
-import { PopulatedPlayer } from "../types/populated";
-import { isValidObjectId } from "mongoose";
+import { PopulatedEvent } from "../types/populated";
 
-export const getPlayerHandler = async (req: Request, res: Response) => {
+export const getEventHandler = async (req: Request, res: Response) => {
     try {
-        const { id } = req.query;
+        const { eventId } = req.query;
 
-        if (!id) {
-            // Return all players
-            const players = await findPlayer({});
+        if (!eventId) {
+            // Return all events
+            const events = await findEvent({});
 
             res
                 .status(HTTP_STATUS_CODES.SUCCESS)
-                .json(arrayToObject(players as unknown as PopulatedPlayer[], (player: PopulatedPlayer) => player.user.uid));
+                .json(arrayToObject(events as unknown as PopulatedEvent[], event => event.eventId as string));
             return;
         }
 
-        if (!isValidObjectId(id)) {
-            throw new Error(`Player ${id} not found.`);
-        }
+        const event = await findEvent({ eventId });
 
-        // user = ObjectId reference
-        const player = await findPlayer({ user: id });
-
-        if (!player.length) {
+        if (!event.length) {
             res
                 .status(HTTP_STATUS_CODES.NOT_FOUND)
                 .json({
-                    message: `Player ${id} not found.`,
+                    message: `Event ${eventId} not found.`,
                 });
             return;
         }
 
         res
             .status(HTTP_STATUS_CODES.SUCCESS)
-            .json(arrayToObject(player as unknown as PopulatedPlayer[], (player: PopulatedPlayer) => player.user.uid));
+            .json(arrayToObject(event as unknown as PopulatedEvent[], event => event.eventId as string));
     } catch (error) {
         res
             .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
             .json({
                 message: error instanceof Error
                     ? error.message
-                    : `Failed finding player(s).`,
+                    : `Failed finding event(s).`,
             });
     }
 }
 
-export const createPlayerHandler = async (req: Request, res: Response) => {
+export const createEventHandler = async (req: Request, res: Response) => {
     try {
-        const { user: _id } = req.body;
+        const title = req.body.title?.trim();
 
-        const exists = await findPlayer({ user: _id });
-        console.log(exists)
+        const exists = await findEvent({ title });
 
         if (exists.length) {
             res
                 .status(HTTP_STATUS_CODES.BAD_REQUEST)
                 .json({
-                    message: `Player ${_id} already exists.`,
+                    message: `Event ${title} already exists.`,
                 });
             return;
         }
 
-        const newPlayer = await createNewPlayer({
-            ...req.body,
-        });
+        const newEvent = await createNewEvent(req.body);
 
-        if (!newPlayer) {
-            throw new Error(`Failed creating player ${_id}.`);
+        if (!newEvent) {
+            throw new Error(`Failed creating event ${title}.`);
         }
 
         res
             .status(HTTP_STATUS_CODES.CREATED)
             .json({
-                message: `Player ${_id} created successfully.`,
+                message: `Event ${title} created successfully.`,
             });
     } catch (error) {
         res
@@ -84,33 +75,33 @@ export const createPlayerHandler = async (req: Request, res: Response) => {
             .json({
                 message: error instanceof Error
                     ? error.message
-                    : `Failed creating player ${req.body._id}.`,
+                    : `Failed creating event ${req.body.title}.`,
             });
     }
 }
 
-export const updatePlayerHandler = async (req: Request, res: Response) => {
+export const updateEventHandler = async (req: Request, res: Response) => {
     try {
-        const { id: _id } = req.params;
+        const { eventId } = req.params;
         
-        const exists = await findPlayer({ user: _id });
+        const exists = await findEvent({ eventId });
 
         if (!exists) {
             res
                 .status(HTTP_STATUS_CODES.NOT_FOUND)
                 .json({
-                    message: `Player ${_id} not found.`,
+                    message: `Event ${eventId} not found.`,
                 });
             return;
         }
 
-        const updated = await updatePlayer({ user: _id }, req.body);
+        const updated = await updateEvent({ eventId }, req.body);
 
         if (!updated) {
             res
                 .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
                 .json({
-                    message: `Failed updating player ${_id}.`,
+                    message: `Failed updating event ${eventId}.`,
                 });
             return;
         }
@@ -118,7 +109,7 @@ export const updatePlayerHandler = async (req: Request, res: Response) => {
         res
             .status(HTTP_STATUS_CODES.SUCCESS)
             .json({
-                message: `Player ${_id} updated successfully.`,
+                message: `Event ${updated.title} updated successfully.`,
             });
     } catch (error) {
         res
@@ -126,33 +117,33 @@ export const updatePlayerHandler = async (req: Request, res: Response) => {
             .json({
                 message: error instanceof Error
                     ? error.message
-                    : `Failed updating player ${req.body.user.uid}.`,
+                    : `Failed updating event ${req.body.title}.`,
             });
     }
 }
 
-export const deletePlayerHandler = async (req: Request, res: Response) => {
+export const deleteEventHandler = async (req: Request, res: Response) => {
     try {
-        const { id: _id } = req.params;
+        const { eventId } = req.params;
 
-        const exists = await findPlayer({ user: _id });
+        const exists = await findEvent({ eventId });
         
         if (!exists) {
             res
                 .status(HTTP_STATUS_CODES.NOT_FOUND)
                 .json({
-                    message: `Player ${_id} not found.`,
+                    message: `Event ${eventId} not found.`,
                 });
             return;
         }
 
-        const deleted = await deletePlayer(_id);
+        const deleted = await deleteEvent(eventId);
 
         if (!deleted) {
             res
                 .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
                 .json({
-                    message: `Failed deleting player ${_id}.`,
+                    message: `Failed deleting event ${eventId}.`,
                 });
             return;
         }
@@ -160,7 +151,7 @@ export const deletePlayerHandler = async (req: Request, res: Response) => {
         res
             .status(HTTP_STATUS_CODES.SUCCESS)
             .json({
-                message: `Player ${_id} deleted.`,
+                message: `Event ${eventId} deleted.`,
             });
     } catch (error) {
         res
@@ -168,7 +159,7 @@ export const deletePlayerHandler = async (req: Request, res: Response) => {
             .json({
                 message: error instanceof Error
                     ? error.message
-                    : `Failed deleting player ${req.params.playerId}.`,
+                    : `Failed deleting event ${req.params.eventId}.`,
             });
     }
 }

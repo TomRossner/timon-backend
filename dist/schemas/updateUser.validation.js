@@ -22,7 +22,7 @@ exports.updateUserSchema = zod_1.z.object({
             .string()
             .regex(regexp_1.USERNAME_REGEXP), // Different than firstName/lastName. Includes minLength / maxLength
         image: zod_1.z.string().optional().nullable(),
-        phoneNumber: zod_1.z.number().min(constants_1.PHONE_NUMBER_MIN_LENGTH).max(constants_1.PHONE_NUMBER_MAX_LENGTH),
+        phoneNumber: zod_1.z.string().min(constants_1.PHONE_NUMBER_MIN_LENGTH).max(constants_1.PHONE_NUMBER_MAX_LENGTH),
         online: zod_1.z.boolean(),
         gender: zod_1.z.enum(["male", "female", "non-binary", "prefer_not_to_say"]),
     }),

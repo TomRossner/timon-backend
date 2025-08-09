@@ -8,7 +8,8 @@
     "image": "",
     "gender": "male",
     "online": false,
-    "phoneNumber": "0584844789"
+    "phoneNumber": "0584844789",
+    "teudatZehut": 206484933
   },
   {
     "firstName": "Idan",
@@ -19,7 +20,8 @@
     "image": "",
     "gender": "male",
     "online": false,
-    "phoneNumber": "0584844789"
+    "phoneNumber": "0549837261",
+    "teudatZehut": 482917563
   },
   {
     "firstName": "Dror",
@@ -30,7 +32,8 @@
     "image": "",
     "gender": "male",
     "online": false,
-    "phoneNumber": "0584844789"
+    "phoneNumber": "0524189375",
+    "teudatZehut": 150394287
   },
   {
     "firstName": "Ayelet",
@@ -41,7 +44,8 @@
     "image": "",
     "gender": "female",
     "online": false,
-    "phoneNumber": "0584844789"
+    "phoneNumber": "0582719463",
+    "teudatZehut": 908172635
   },
   {
     "firstName": "Yaron",
@@ -52,7 +56,8 @@
     "image": "",
     "gender": "male",
     "online": false,
-    "phoneNumber": "0584844789"
+    "phoneNumber": "0536491782",
+    "teudatZehut": 721045983
   },
   {
     "firstName": "Udi",
@@ -63,6 +68,187 @@
     "image": "",
     "gender": "male",
     "online": false,
-    "phoneNumber": "0584844789"
+    "phoneNumber": "0502864917",
+    "teudatZehut": 395682140
+  },
+  {
+    "firstName": "Lior",
+    "lastName": "Shalev",
+    "userName": "liorshalev",
+    "email": "liorshalev@gmail.com",
+    "password": "Liorshalev123",
+    "image": "",
+    "gender": "male",
+    "online": false,
+    "phoneNumber": "0528374619",
+    "teudatZehut": 834291756
+  },
+  {
+    "firstName": "Shira",
+    "lastName": "Goldstein",
+    "userName": "shiragold",
+    "email": "shiragoldstein@gmail.com",
+    "password": "Shiragoldstein123",
+    "image": "",
+    "gender": "female",
+    "online": false,
+    "phoneNumber": "0549672831",
+    "teudatZehut": 276549381
+  },
+  {
+    "firstName": "Eitan",
+    "lastName": "Barak",
+    "userName": "eitanbarak",
+    "email": "eitanbarak@gmail.com",
+    "password": "Eitanbarak123",
+    "image": "",
+    "gender": "male",
+    "online": false,
+    "phoneNumber": "0508726194",
+    "teudatZehut": 965013472
+  },
+  {
+    "firstName": "Noa",
+    "lastName": "Mizrahi",
+    "userName": "noamizrahi",
+    "email": "noamizrahi@gmail.com",
+    "password": "Noamizrahi123",
+    "image": "",
+    "gender": "female",
+    "online": false,
+    "phoneNumber": "0586492735",
+    "teudatZehut": 138420697
+  },
+  {
+    "firstName": "Amit",
+    "lastName": "Cohen",
+    "userName": "amitcohen",
+    "email": "amitcohen@gmail.com",
+    "password": "Amitcohen123",
+    "image": "",
+    "gender": "male",
+    "online": false,
+    "phoneNumber": "0538726491",
+    "teudatZehut": 507362189
+  },
+  {
+    "firstName": "Gal",
+    "lastName": "Levy",
+    "userName": "gallevy",
+    "email": "gallevy@gmail.com",
+    "password": "Gallevy123",
+    "image": "",
+    "gender": "male",
+    "online": false,
+    "phoneNumber": "0507134928",
+    "teudatZehut": 472839165
+  },
+  {
+    "firstName": "Yael",
+    "lastName": "Peretz",
+    "userName": "yaelperetz",
+    "email": "yaelperetz@gmail.com",
+    "password": "Yaelperetz123",
+    "image": "",
+    "gender": "female",
+    "online": false,
+    "phoneNumber": "0528941376",
+    "teudatZehut": 385716249
+  },
+  {
+    "firstName": "Nadav",
+    "lastName": "Rosen",
+    "userName": "nadavrosen",
+    "email": "nadavrosen@gmail.com",
+    "password": "Nadavrosen123",
+    "image": "",
+    "gender": "male",
+    "online": false,
+    "phoneNumber": "0546312978",
+    "teudatZehut": 961527384
+  },
+  {
+    "firstName": "Hila",
+    "lastName": "Mor",
+    "userName": "hilamor",
+    "email": "hilamor@gmail.com",
+    "password": "Hilamor123",
+    "image": "",
+    "gender": "female",
+    "online": false,
+    "phoneNumber": "0532819476",
+    "teudatZehut": 247958316
+  },
+  {
+    "firstName": "Ariel",
+    "lastName": "David",
+    "userName": "arieldavid",
+    "email": "arieldavid@gmail.com",
+    "password": "Arieldavid123",
+    "image": "",
+    "gender": "male",
+    "online": false,
+    "phoneNumber": "0583164927",
+    "teudatZehut": 714985362
+  },
+  {
+    "firstName": "Tamar",
+    "lastName": "Azoulay",
+    "userName": "tamarazoulay",
+    "email": "tamarazoulay@gmail.com",
+    "password": "Tamarazoulay123",
+    "image": "",
+    "gender": "female",
+    "online": false,
+    "phoneNumber": "0506941738",
+    "teudatZehut": 659238471
+  },
+  {
+    "firstName": "Erez",
+    "lastName": "Koren",
+    "userName": "erezkoren",
+    "email": "erezkoren@gmail.com",
+    "password": "Erezkoren123",
+    "image": "",
+    "gender": "male",
+    "online": false,
+    "phoneNumber": "0528374915",
+    "teudatZehut": 593817426
+  },
+  {
+    "firstName": "Dana",
+    "lastName": "Shapiro",
+    "userName": "danashapiro",
+    "email": "danashapiro@gmail.com",
+    "password": "Danashapiro123",
+    "image": "",
+    "gender": "female",
+    "online": false,
+    "phoneNumber": "0549736218",
+    "teudatZehut": 827316459
+  },
+  {
+    "firstName": "Omer",
+    "lastName": "Ben Ami",
+    "userName": "omerbenami",
+    "email": "omerbenami@gmail.com",
+    "password": "Omerbenami123",
+    "image": "",
+    "gender": "male",
+    "online": false,
+    "phoneNumber": "0538164927",
+    "teudatZehut": 136592847
+  },
+  {
+    "firstName": "Roni",
+    "lastName": "Kaplan",
+    "userName": "ronikaplan",
+    "email": "ronikaplan@gmail.com",
+    "password": "Ronikaplan123",
+    "image": "",
+    "gender": "female",
+    "online": false,
+    "phoneNumber": "0583746192",
+    "teudatZehut": 794613825
   }
 ]

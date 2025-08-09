@@ -11,6 +11,11 @@ const UserSchema = new mongoose_1.default.Schema({
         required: true,
         unique: true,
     },
+    teudatZehut: {
+        type: Number,
+        required: true,
+        unique: true,
+    },
     email: {
         type: String,
         required: true,

@@ -1,4 +1,4 @@
-import { TeamData, TeamID } from "./team";
+import { TeamData } from "./team";
 import { UID, UserSummary } from "./user";
 
 export type Player = {

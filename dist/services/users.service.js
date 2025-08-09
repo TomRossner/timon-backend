@@ -31,7 +31,9 @@ const findUser = (query, options) => __awaiter(void 0, void 0, void 0, function*
 exports.findUser = findUser;
 const createNewUser = (userData) => __awaiter(void 0, void 0, void 0, function* () {
     const hashedPassword = yield bcrypt_1.default.hash(userData.password, constants_1.HASH_ROUNDS);
-    return (yield user_model_1.default.create(Object.assign(Object.assign({}, userData), { uid: (0, uuid_1.v4)(), password: hashedPassword }))).toObject();
+    return (yield user_model_1.default
+        .create(Object.assign(Object.assign({}, userData), { uid: (0, uuid_1.v4)(), password: hashedPassword })))
+        .toObject();
 });
 exports.createNewUser = createNewUser;
 const updateUser = (query, update) => __awaiter(void 0, void 0, void 0, function* () {

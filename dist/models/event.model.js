@@ -6,9 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const events_1 = require("../lib/events");
 const AddressSchema = new mongoose_1.default.Schema({
-    city: { type: String, required: true },
-    fieldAddress: { type: String, required: true },
-    fieldName: { type: String },
+    city: { type: String, required: true, trim: true },
+    fieldAddress: { type: String, required: true, trim: true },
+    fieldName: { type: String, trim: true },
     location: {
         lat: { type: Number, required: true },
         long: { type: Number, required: true },
@@ -23,6 +23,7 @@ const EventSchema = new mongoose_1.default.Schema({
     title: {
         type: String,
         require: true,
+        trim: true,
     },
     teams: {
         type: [mongoose_1.default.Schema.Types.ObjectId],
@@ -52,7 +53,7 @@ const EventSchema = new mongoose_1.default.Schema({
     },
     address: {
         type: AddressSchema,
-        require: true,
+        default: null,
     },
     createdBy: {
         type: mongoose_1.default.Schema.Types.ObjectId,

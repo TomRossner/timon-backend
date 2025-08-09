@@ -10,34 +10,26 @@ import "../models/user.model";
 const USER_SELECT_FIELDS = { __v: 0, password: 0 };
 
 export const findTeam = async (query: FilterQuery<TeamDoc>) => {
-    const teams = await TeamModel.find(query).select({ __v: 0 });
+    const teams = await TeamModel
+        .find(query)
+        .select({ __v: 0 })
+        .populate({
+            path: 'manager',
+            select: USER_SELECT_FIELDS
+        })
+        .populate({
+            path: 'coaches',
+            populate: { path: 'user', select: USER_SELECT_FIELDS },
+            select: { __v: 0 }
+        })
+        .populate({
+            path: 'roster',
+            populate: { path: 'user', select: USER_SELECT_FIELDS },
+            select: { __v: 0 }
+        })
+        .lean();
 
-    if (!teams.length) return [];
-
-    const populatedTeams = await Promise.all(
-        teams.map(team =>
-            TeamModel
-                .findById(team._id)
-                .select({ __v: 0 })
-                .populate({
-                    path: 'manager',
-                    select: USER_SELECT_FIELDS
-                })
-                .populate({
-                    path: 'coaches',
-                    populate: { path: 'user', select: USER_SELECT_FIELDS },
-                    select: { __v: 0 }
-                })
-                .populate({
-                    path: 'roster',
-                    populate: { path: 'user', select: USER_SELECT_FIELDS },
-                    select: { __v: 0 }
-                })
-                .lean()
-        )
-    );
-
-    return populatedTeams;
+    return teams;
 }
 
 export const createNewTeam = async (teamData: TeamData) => {

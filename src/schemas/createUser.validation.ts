@@ -17,7 +17,7 @@ export const createUserSchema = z.object({
             .string()
             .regex(USERNAME_REGEXP), // Different than firstName/lastName. Includes minLength / maxLength
         image: z.string().optional(),
-        phoneNumber: z.number().min(PHONE_NUMBER_MIN_LENGTH).max(PHONE_NUMBER_MAX_LENGTH),
+        phoneNumber: z.string().min(PHONE_NUMBER_MIN_LENGTH).max(PHONE_NUMBER_MAX_LENGTH),
         online: z.boolean(),
         gender: z.enum(["male", "female", "non-binary", "prefer_not_to_say"]),
     }),

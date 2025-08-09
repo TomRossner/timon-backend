@@ -25,6 +25,7 @@ const database_1 = require("./database/database");
 const teams_router_1 = __importDefault(require("./routers/teams.router"));
 const players_router_1 = __importDefault(require("./routers/players.router"));
 const divisions_router_1 = __importDefault(require("./routers/divisions.router"));
+const events_router_1 = __importDefault(require("./routers/events.router"));
 const PORT = 3001;
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
@@ -41,6 +42,7 @@ app.use('/api/users', users_router_1.default);
 app.use('/api/teams', teams_router_1.default);
 app.use('/api/players', players_router_1.default);
 app.use('/api/divisions', divisions_router_1.default);
+app.use('/api/events', events_router_1.default);
 app.use(notFoundHandler);
 const init = () => __awaiter(void 0, void 0, void 0, function* () {
     try {

@@ -6,7 +6,7 @@ const divisions = [...allDivisions as readonly string[]] as [string, ...string[]
 
 export const createTeamSchema = z.object({
     body: z.object({
-        teamName: z
+        name: z
             .string()
             .regex(NAME_REGEXP),
         manager: z.string(), // ObjectId reference

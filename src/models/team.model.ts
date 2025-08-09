@@ -21,6 +21,7 @@ const TeamSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
+        trim: true,
     },
     division: {
         type: String,

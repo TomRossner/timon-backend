@@ -2,9 +2,9 @@ import mongoose, { InferSchemaType } from "mongoose";
 import { EVENT_TYPES } from "../lib/events";
 
 const AddressSchema = new mongoose.Schema({
-    city: { type: String, required: true },
-    fieldAddress: { type: String, required: true },
-    fieldName: { type: String },
+    city: { type: String, required: true, trim: true },
+    fieldAddress: { type: String, required: true, trim: true },
+    fieldName: { type: String, trim: true },
     location: {
         lat: { type: Number, required: true },
         long: { type: Number, required: true },
@@ -20,6 +20,7 @@ const EventSchema = new mongoose.Schema({
     title: {
         type: String,
         require: true,
+        trim: true,
     },
     teams: {
         type: [mongoose.Schema.Types.ObjectId],
@@ -49,7 +50,7 @@ const EventSchema = new mongoose.Schema({
     },
     address: {
         type: AddressSchema,
-        require: true,
+        default: null,
     },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,

@@ -68,9 +68,14 @@ export const getTeamHandler = async (req: Request, res: Response) => {
 
 export const createTeamHandler = async (req: Request, res: Response) => {
     try {
-        const { name } = req.body;
-
-        const exists = await findTeam({ name });
+        const name = req.body.name?.trim();
+        
+        const REGEX_SPECIAL_CHARS = /[.*+?^${}()|[\]\\]/g;
+        const escapeRegex = (str: string) => str.replace(REGEX_SPECIAL_CHARS, '\\$&');
+        
+        const exists = await findTeam({
+            name: { $regex: `^${escapeRegex(name.toString())}$`, $options: 'i' }
+        });
 
         if (exists.length) {
             res

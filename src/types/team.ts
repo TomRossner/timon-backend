@@ -3,13 +3,16 @@ import { UID, UserSummary } from "./user";
 export type TeamID = string;
 
 export type TeamData = {
-    teamId: TeamID;
     name: string;
     manager: UserSummary;
     coaches: Map<UID, UserSummary>;
     roster: Map<UID, UserSummary>;
     logo: string;
     address: Address;
+}
+
+export type Team = TeamData & {
+    teamId: TeamID;
 }
 
 export type Address = {
@@ -21,7 +24,5 @@ export type Address = {
         long: number;
     }
 }
-
-export type Team = TeamData;
 
 export type Teams = Map<TeamID, TeamData>;

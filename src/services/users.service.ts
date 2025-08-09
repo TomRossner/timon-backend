@@ -26,11 +26,13 @@ export const findUser = async (query: FilterQuery<UserDoc>, options?: UserQueryO
 export const createNewUser = async (userData: NewUserData) => {
     const hashedPassword = await bcrypt.hash(userData.password, HASH_ROUNDS);
     
-    return (await UserModel.create({
-        ...userData,
-        uid: uuid(),
-        password: hashedPassword,
-    })).toObject();
+    return (await UserModel
+        .create({
+            ...userData,
+            uid: uuid(),
+            password: hashedPassword,
+        }))
+        .toObject();
 }
 
 export const updateUser = async (query: FilterQuery<UserDoc>, update: UpdateQuery<UserDoc>) => {
