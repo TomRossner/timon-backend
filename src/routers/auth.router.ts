@@ -16,7 +16,7 @@ authRouter.get('/google/callback',
     passport.authenticate('google', { session: false, failureRedirect: `${CLIENT_URL}/signin` }),
     (req, res) => {
         const token = generateToken(req.user as FullUser);
-        res.redirect(`${CLIENT_URL}/signin?token=${token}`);
+        res.redirect(`${CLIENT_URL}/signin/callback?token=${token}`);
     }
 );
 authRouter.post('/logout', logoutHandler);

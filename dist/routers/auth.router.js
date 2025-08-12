@@ -15,7 +15,8 @@ const authRouter = (0, express_1.Router)();
 authRouter.post('/login', (0, validate_middleware_1.validate)(authCredentials_validation_1.authCredentialsSchema), auth_controller_1.userLoginHandler);
 authRouter.get('/login/google', passport_1.default.authenticate('google'));
 authRouter.get('/google/callback', passport_1.default.authenticate('google', { session: false, failureRedirect: `${constants_1.CLIENT_URL}/signin` }), (req, res) => {
-    const token = (0, jwt_1.generateToken)(req.user); // generate JWT
-    res.redirect(`${constants_1.CLIENT_URL}?token=${token}`);
+    const token = (0, jwt_1.generateToken)(req.user);
+    res.redirect(`${constants_1.CLIENT_URL}/signin?token=${token}`);
 });
+authRouter.post('/logout', auth_controller_1.logoutHandler);
 exports.default = authRouter;

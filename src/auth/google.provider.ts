@@ -5,11 +5,12 @@ import passport from "passport";
 import { Strategy as GoogleStrategy, Profile, VerifyCallback } from "passport-google-oauth20";
 import { createNewUser, findUser, updateUser } from "../services/users.service";
 import { NewUserData } from "../types/user";
+import { API_URL } from "../lib/constants";
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID as string;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET as string;
 
-const callbackURL: string = `http://localhost:3001/api/auth/google/callback`;
+const callbackURL: string = `${API_URL}/auth/google/callback`;
 
 const options = {
     clientID: GOOGLE_CLIENT_ID,
