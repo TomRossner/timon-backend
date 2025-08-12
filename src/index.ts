@@ -16,6 +16,8 @@ import playersRouter from "./routers/players.router";
 import divisionsRouter from "./routers/divisions.router";
 import eventsRouter from "./routers/events.router";
 import authRouter from "./routers/auth.router";
+import passport from "passport";
+import { CLIENT_URL } from "./lib/constants";
 
 const PORT = 3001;
 
@@ -24,6 +26,7 @@ const app = express();
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors());
+app.use(passport.initialize());
 
 const notFoundHandler = (req: Request, res: Response) => {
     res.status(HTTP_STATUS.NOT_FOUND).json({

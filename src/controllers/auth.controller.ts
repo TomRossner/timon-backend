@@ -5,6 +5,7 @@ import { ERROR_MESSAGES } from "../lib/errorMessages";
 import { compare } from "bcrypt";
 import { generateToken } from "../lib/jwt";
 import { FullUser } from "../types/user";
+import passport from "passport";
 
 export const userLoginHandler = async (req: Request, res: Response) => {
     try {
@@ -55,5 +56,73 @@ export const userLoginHandler = async (req: Request, res: Response) => {
                     ? error.message
                     : `${ERROR_MESSAGES.INTERNAL_SERVER_ERROR}.`,
             });
+    }
+}
+
+export const loginWithProviderHandler = async (req: Request, res: Response) => {
+    try {
+        const { provider } = req.params;
+        console.log(provider)
+
+        switch (provider) {
+            case 'google':
+                passport.authenticate('google', { scope: ['profile', 'email'] });
+                break;
+                
+            case 'facebook':
+                passport.authenticate('facebook', { scope: [] });
+                break;
+
+            case 'microsoft':
+                passport.authenticate('microsoft', { scope: [] });
+                break;
+            
+            // case 'apple':
+            //     passport.authenticate('apple');
+            //     break;
+        
+            default:
+                throw new Error(`Login failed. Bad provider: ${provider}.`);
+        }
+    } catch (error) {
+        res
+            .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
+            .json({
+                message: error instanceof Error
+                    ? error.message
+                    : `Login failed. ${ERROR_MESSAGES.INTERNAL_SERVER_ERROR}.`,
+            });
+    }
+}
+
+export const logoutHandler = async (req: Request, res: Response) => {
+    try {
+        const { uid } = req.body;
+
+        if (!uid) {
+            res
+                .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
+                .json({ message: `Logout failed. ${ERROR_MESSAGES.INTERNAL_SERVER_ERROR}` });
+            return;
+        }
+
+        const updatedUser = await updateUser(
+            { uid },
+            { online: false },
+            { stripPassword: true }
+        );
+
+        if (!updatedUser) {
+            res
+                .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
+                .json({ message: `Logout failed. ${ERROR_MESSAGES.INTERNAL_SERVER_ERROR}` });
+            return;
+        }
+
+        res.sendStatus(HTTP_STATUS_CODES.SUCCESS);
+    } catch (error) {
+        res
+            .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
+            .json({ message: ERROR_MESSAGES.INTERNAL_SERVER_ERROR });
     }
 }

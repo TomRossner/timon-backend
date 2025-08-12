@@ -27,11 +27,13 @@ const players_router_1 = __importDefault(require("./routers/players.router"));
 const divisions_router_1 = __importDefault(require("./routers/divisions.router"));
 const events_router_1 = __importDefault(require("./routers/events.router"));
 const auth_router_1 = __importDefault(require("./routers/auth.router"));
+const passport_1 = __importDefault(require("passport"));
 const PORT = 3001;
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, morgan_1.default)("dev"));
 app.use((0, cors_1.default)());
+app.use(passport_1.default.initialize());
 const notFoundHandler = (req, res) => {
     res.status(httpStatusCodes_1.default.NOT_FOUND).json({
         success: false,

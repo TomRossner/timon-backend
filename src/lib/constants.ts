@@ -5,3 +5,5 @@ export const PHONE_NUMBER_MIN_LENGTH: number = 10;
 export const PHONE_NUMBER_MAX_LENGTH: number = 10;
 
 export const HASH_ROUNDS: number = 10;
+
+export const CLIENT_URL: string = 'http://localhost:3000';
